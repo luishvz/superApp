@@ -1,0 +1,17 @@
+version: '2'
+services:
+    auditlog-mongodb:
+        container_name: auditlog-mongodb
+        image: mongo:3.2.10
+        ports:
+            - "27017:27017"
+        command: mongos --configdb auditlog-mongodb-config
+    auditlog-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    auditlog-mongodb-config:
+        image: mongo:3.2.10
+        container_name: auditlog-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db

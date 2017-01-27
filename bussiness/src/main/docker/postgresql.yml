@@ -1,0 +1,12 @@
+version: '2'
+services:
+    bussiness-postgresql:
+        container_name: bussiness-postgresql
+        image: postgres:9.5.4
+        # volumes:
+        #     - ~/volumes/jhipster/bussiness/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=bussiness
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

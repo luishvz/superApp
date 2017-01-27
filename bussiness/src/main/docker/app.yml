@@ -1,0 +1,22 @@
+version: '2'
+services:
+    bussiness-app:
+        image: bussiness
+        external_links:
+            - bussiness-postgresql:postgresql
+            - jhipster-registry:registry
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONFIG_URI=http://admin:admin@registry:8761/config
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/bussiness
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+    bussiness-postgresql:
+        extends:
+            file: postgresql.yml
+            service: bussiness-postgresql
+    jhipster-registry:
+        extends:
+            file: jhipster-registry.yml
+            service: jhipster-registry
+        environment:
+            - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:./central-config/docker-config/
